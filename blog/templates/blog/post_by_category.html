@@ -1,0 +1,19 @@
+{% extends "blog/base.html" %} {% block title %} {{ category|title }} - {{
+block.super }} {% endblock %} {% block content %}
+
+<div class="content">
+  <div class="section-inner clearfix">
+    <h4>All the posts under category - {{ category.name }}</h4>
+
+    {% for post in posts %}
+    <h3>
+      <a href="{{ post.get_absolute_url }}">{{ post.title|capfirst }}</a>
+    </h3>
+    <p class="post-info">{% include 'blog/post_info.html' %}</p>
+    {% empty %}
+    <p>There are not posts under {{ category }}</p>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blog Post</title>
+  </head>
+
+  <body>
+    <h1>{{ post_title }}</h1>
+
+    <p>Published by <span>Author : {{ author|title }} </span></p>
+
+    <p>{{ post_content }}</p>
+
+    <p>Related Posts:</p>
+    <ul>
+      {% for item in item_list %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+
+    {% if comments %}
+    <p>This post has some comments</p>
+    {% else %}
+    <p>This post has no comments</p>
+    {% endif %}
+  </body>
+</html>
