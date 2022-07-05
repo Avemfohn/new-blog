@@ -5,6 +5,8 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404,  HttpRespon
 from .forms import FeedbackForm
 from django.contrib import messages
 from django.core.mail import mail_admins
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django_project import helpers
 
 
 def index(request):
@@ -13,6 +15,7 @@ def index(request):
 
 def post_list(request):
     posts = Post.objects.all()
+    posts = helpers.pg_records(request, post_list, 5)
     return render(request, 'blog/post_list.html', {'posts': posts})
 
 
@@ -24,6 +27,7 @@ def post_detail(request, id, post_slug):
 def post_by_category(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
     posts = get_list_or_404(Post, category=category)
+    posts = helpers.pg_records(request, posts, 5)
     context = {
         'category': category,
         'posts': posts
@@ -35,6 +39,7 @@ def post_by_category(request, category_slug):
 def post_by_tag(request, tag_slug):
     tag = get_object_or_404(Tag, slug=tag_slug)
     posts = get_list_or_404(Post, tags=tag)
+    posts = helpers.pg_records(request, posts, 5)
     context = {
         'tag': tag,
         'posts': posts
