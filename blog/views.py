@@ -15,7 +15,21 @@ def index(request):
 
 def post_list(request):
     posts = Post.objects.all()
-    posts = helpers.pg_records(request, post_list, 5)
+    paginator = Paginator(posts, 5)
+
+    # get the page parameter from the query string
+    # if page parameter is available get() method will return empty string ''
+    page = request.GET.get('page')
+
+    try:
+        # create Page object for the given page
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # if page parameter in the query string is not available, return the first page
+        posts = paginator.page(1)
+    except EmptyPage:
+        # if the value of the page parameter exceeds num_pages then return the last page
+        posts = paginator.page(paginator.num_pages)
     return render(request, 'blog/post_list.html', {'posts': posts})
 
 
@@ -27,7 +41,21 @@ def post_detail(request, id, post_slug):
 def post_by_category(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
     posts = get_list_or_404(Post, category=category)
-    posts = helpers.pg_records(request, posts, 5)
+    paginator = Paginator(posts, 5)
+
+    # get the page parameter from the query string
+    # if page parameter is available get() method will return empty string ''
+    page = request.GET.get('page')
+
+    try:
+        # create Page object for the given page
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # if page parameter in the query string is not available, return the first page
+        posts = paginator.page(1)
+    except EmptyPage:
+        # if the value of the page parameter exceeds num_pages then return the last page
+        posts = paginator.page(paginator.num_pages)
     context = {
         'category': category,
         'posts': posts
@@ -39,7 +67,21 @@ def post_by_category(request, category_slug):
 def post_by_tag(request, tag_slug):
     tag = get_object_or_404(Tag, slug=tag_slug)
     posts = get_list_or_404(Post, tags=tag)
-    posts = helpers.pg_records(request, posts, 5)
+    paginator = Paginator(posts, 5)
+
+    # get the page parameter from the query string
+    # if page parameter is available get() method will return empty string ''
+    page = request.GET.get('page')
+
+    try:
+        # create Page object for the given page
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # if page parameter in the query string is not available, return the first page
+        posts = paginator.page(1)
+    except EmptyPage:
+        # if the value of the page parameter exceeds num_pages then return the last page
+        posts = paginator.page(paginator.num_pages)
     context = {
         'tag': tag,
         'posts': posts
