@@ -12,7 +12,7 @@
       <li>SuperUser: {{ request.user.is_superuser }}</li>
       <li>Staff: {{ request.user.is_staff }}</li>
       <li>Date Joined: {{ request.user.date_joined }}</li>
-      <li>Last Login: {{ request.user.last_login }}</li>
+      <li>Last Login: {{ request.user.last_login}}</li>
     </ul>
 
     <p><a href="{% url 'logout' %}">Logout</a></p>
