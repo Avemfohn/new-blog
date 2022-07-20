@@ -18,5 +18,6 @@ urlpatterns = [
         name='password_change'),
     # path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(template_name='cadmin/password_change_done.html'),
     #      name='password_change_done'),
+    url(r'^register/$', views.register, name='register'),
 
 ]
